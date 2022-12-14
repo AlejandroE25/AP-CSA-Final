@@ -57,6 +57,8 @@ public class GameGUI extends JComponent
   private int totalTraps;
   private Rectangle[] traps;
 
+  private Image trapImage;
+
   // scores, sometimes awarded as (negative) penalties
   private int prizeVal = 10;
   private int trapVal = 5;
@@ -94,6 +96,14 @@ public class GameGUI extends JComponent
     } catch (Exception e) {
      System.err.println("Could not open file player.png");
     }
+
+    // trap image
+    try {
+      trapImage = ImageIO.read(new File("src/main/resources/pothole.png"));
+    } catch (Exception e) {
+     System.err.println("Could not open file trap.png");
+    }
+
     // save player location
     playerLoc = new Point(x,y);
 
@@ -201,6 +211,65 @@ public class GameGUI extends JComponent
         }     
       }
 
+      // check if the next tile is a trap, and if that trap's width is greater than 0.  if it is, play a sound and return a penalty.
+        for (Rectangle r: traps)
+        {
+            // this rect. location
+            int startX =  (int)r.getX();
+            int endX  =  (int)r.getX() + (int)r.getWidth();
+            int startY =  (int)r.getY();
+            int endY = (int) r.getY() + (int)r.getHeight();
+
+            // (Note: the following if statements could be written as huge conditional but who wants to look at that!?)
+            // moving RIGHT, check to the right
+            if ((incrx > 0) && (x <= startX) && (startX <= newX) && (y >= startY) && (y <= endY))
+            {
+                if (r.getWidth() > 0)
+                {
+                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    trap.play();
+                    System.out.println("A TRAP IS IN THE WAY");
+                    return -trapVal;
+                }
+            }
+            // moving LEFT, check to the left
+            else if ((incrx < 0) && (x >= startX) && (startX >= newX) && (y >= startY) && (y <= endY))
+            {
+                if (r.getWidth() > 0)
+                {
+                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    trap.play();
+                    System.out.println("A TRAP IS IN THE WAY");
+                    return -trapVal;
+                }
+            }
+            // moving DOWN check below
+            else if ((incry > 0) && (y <= startY && startY <= newY && x >= startX && x <= endX))
+            {
+                if (r.getWidth() > 0)
+                {
+                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    trap.play();
+                    System.out.println("A TRAP IS IN THE WAY");
+                    return -trapVal;
+                }
+            }
+            // moving UP check above
+            else if ((incry < 0) && (y >= startY) && (startY >= newY) && (x >= startX) && (x <= endX))
+            {
+                if (r.getWidth() > 0)
+                {
+                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    trap.play();
+                    System.out.println("A TRAP IS IN THE WAY");
+                    return -trapVal;
+                }
+            }
+        }
+
+
+
+
       // all is well, move player
       x += incrx;
       y += incry;
@@ -252,8 +321,7 @@ public class GameGUI extends JComponent
    * @param newy a location indicating the space above or below the player
    * @return a positive score if a trap is sprung, otherwise a negative penalty for trying to spring a non-existent trap
    */
-  public int springTrap(int newx, int newy)
-  {
+  public int springTrap(int newx, int newy) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
     double px = playerLoc.getX() + newx;
     double py = playerLoc.getY() + newy;
 
@@ -268,6 +336,8 @@ public class GameGUI extends JComponent
         {
           r.setSize(0,0);
           System.out.println("TRAP IS SPRUNG!");
+            AudioPlayer fill = new AudioPlayer("src/main/resources/fill.wav");
+            fill.play();
           return trapVal;
         }
       }
@@ -430,6 +500,16 @@ public class GameGUI extends JComponent
     {
       g2.setPaint(Color.BLACK);
       g2.fill(r);
+    }
+
+    // draw potholes on each trap
+    for (Rectangle t : traps)
+    {
+      if (t.getWidth() > 0){
+          int tx = (int)t.getX() - 6;
+          int ty = (int)t.getY() - 6;
+          g.drawImage(trapImage, tx, ty, null);
+      }
     }
    
     // draw player, saving its location

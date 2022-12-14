@@ -6,17 +6,19 @@ package indv.aescamilla.csafinal;
 * 10/10/2019
 * Copyright(c) 2019 PLTW to present. All rights reserved
 */
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Scanner;
-import java.awt.event.KeyEvent;
-
 
 import static indv.aescamilla.csafinal.EscapeRoom.*;
-import static indv.aescamilla.csafinal.HelperFunctions.*;
+import static indv.aescamilla.csafinal.HelperFunctions.print;
+import static indv.aescamilla.csafinal.HelperFunctions.sleep;
+import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 
 /**
  * Create an escape room game where the player must navigate
@@ -72,15 +74,16 @@ public class EscapeRoom
 
   public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
     // welcome message
-    System.out.println("Welcome to EscapeRoom!");
-    System.out.println("Get to the other side of the room, avoiding walls and invisible traps,");
-    System.out.println("pick up all the prizes.\n");
+    print("Welcome to EscapeRoom!");
+    print("Get to the other side of the room, avoiding walls and invisible traps,");
+    print("pick up all the prizes.\n");
     
 
     game.createBoard();
 
     background = new AudioPlayer("src/main/resources/013 Underground.wav");
     background.play();
+    background.clip.loop(LOOP_CONTINUOUSLY);
     // size of move
 
     game.addKeyListener(new MKeyListener());
@@ -131,11 +134,7 @@ class MKeyListener extends KeyAdapter {
 
           try {
               gameEnd = game.endGame();
-          } catch (UnsupportedAudioFileException e) {
-              throw new RuntimeException(e);
-          } catch (LineUnavailableException e) {
-              throw new RuntimeException(e);
-          } catch (IOException e) {
+          } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
               throw new RuntimeException(e);
           }
           updateScore(gameEnd);
@@ -155,6 +154,14 @@ class MKeyListener extends KeyAdapter {
         if (event.isShiftDown()){
             try {
                 updateScore(game.movePlayer(2 * m, 0));
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (event.isAltDown()) {
+
+            try {
+                updateScore(game.springTrap(m, 0));
             } catch (UnsupportedAudioFileException e) {
                 throw new RuntimeException(e);
             } catch (LineUnavailableException e) {
@@ -162,15 +169,17 @@ class MKeyListener extends KeyAdapter {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            try {
+                updateScore(game.movePlayer(m, 0));
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         else {
             try {
                 updateScore(game.movePlayer(m, 0));
-            } catch (UnsupportedAudioFileException e) {
-                throw new RuntimeException(e);
-            } catch (LineUnavailableException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -179,6 +188,13 @@ class MKeyListener extends KeyAdapter {
             if (event.isShiftDown()){
                 try {
                     updateScore(game.movePlayer(-2 * m, 0));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if (event.isAltDown()) {
+                try {
+                    updateScore(game.springTrap(-m, 0));
                 } catch (UnsupportedAudioFileException e) {
                     throw new RuntimeException(e);
                 } catch (LineUnavailableException e) {
@@ -186,15 +202,16 @@ class MKeyListener extends KeyAdapter {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                try {
+                    updateScore(game.movePlayer(-m, 0));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else {
                 try {
                     updateScore(game.movePlayer(-m, 0));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -203,6 +220,13 @@ class MKeyListener extends KeyAdapter {
             if (event.isShiftDown()){
                 try {
                     updateScore(game.movePlayer(0, -2 * m));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if (event.isAltDown()) {
+                try {
+                    updateScore(game.springTrap(0, -m));
                 } catch (UnsupportedAudioFileException e) {
                     throw new RuntimeException(e);
                 } catch (LineUnavailableException e) {
@@ -210,15 +234,16 @@ class MKeyListener extends KeyAdapter {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                try {
+                    updateScore(game.movePlayer(0, -m));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else {
                 try {
                     updateScore(game.movePlayer(0, -m));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -227,6 +252,13 @@ class MKeyListener extends KeyAdapter {
             if (event.isShiftDown()){
                 try {
                     updateScore(game.movePlayer(0, 2 * m));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if (event.isAltDown()) {
+                try {
+                    updateScore(game.springTrap(0, m));
                 } catch (UnsupportedAudioFileException e) {
                     throw new RuntimeException(e);
                 } catch (LineUnavailableException e) {
@@ -234,15 +266,16 @@ class MKeyListener extends KeyAdapter {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                try {
+                    updateScore(game.movePlayer(0, m));
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else {
                 try {
                     updateScore(game.movePlayer(0, m));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -250,11 +283,7 @@ class MKeyListener extends KeyAdapter {
       case KeyEvent.VK_R -> {
           try {
               updateScore(game.replay());
-          } catch (UnsupportedAudioFileException e) {
-              throw new RuntimeException(e);
-          } catch (LineUnavailableException e) {
-              throw new RuntimeException(e);
-          } catch (IOException e) {
+          } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
               throw new RuntimeException(e);
           }
       }
@@ -264,6 +293,11 @@ class MKeyListener extends KeyAdapter {
           } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
               throw new RuntimeException(e);
           }
+      }
+
+      case KeyEvent.VK_H -> {
+          JFrame frame = new JFrame("Help");
+          JOptionPane.showMessageDialog(frame, "Use the arrow keys to move. Hold shift to move twice as far. Press space to pick up a prize. Press R to replay the game. Press Q to quit.");
       }
     }
 

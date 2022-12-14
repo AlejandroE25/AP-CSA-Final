@@ -15,13 +15,13 @@ class HelperFunctions {
     print(question);
     Scanner readLn = new Scanner(System.in);
     String input = readLn.nextLine();
-    // Intentionall didn't close the reader.  Because Java is special
+    // Intentionally didn't close the reader.  Because Java is special
     return input;
   }
 
   public static void sleep(int secondsToSleep){
     try {
-    Thread.sleep(secondsToSleep * 1000);
+    Thread.sleep(secondsToSleep * 1000L);
     }
     catch (InterruptedException ie) {
       Thread.currentThread().interrupt();
