@@ -70,8 +70,7 @@ public class GameGUI extends JComponent
   private JFrame frame;
   public JLabel scoreLabel;
   public int score = 0;
-
-
+  
 
   /**
    * Constructor for the GameGUI class.
@@ -80,26 +79,26 @@ public class GameGUI extends JComponent
   public GameGUI() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
     
     try {
-      bgImage = ImageIO.read(new File("src/main/resources/grid.png"));
+      bgImage = ImageIO.read(new File("resources/grid.png"));
     } catch (Exception e) {
       System.err.println("Could not open file grid.png");
     }      
     try {
-      prizeImage = ImageIO.read(new File("src/main/resources/coin.png"));
+      prizeImage = ImageIO.read(new File("resources/coin.png"));
     } catch (Exception e) {
       System.err.println("Could not open file coin.png");
     }
   
     // player image, student can customize this image by changing file on disk
     try {
-      player = ImageIO.read(new File("src/main/resources/player.png"));
+      player = ImageIO.read(new File("resources/player.png"));
     } catch (Exception e) {
      System.err.println("Could not open file player.png");
     }
 
     // trap image
     try {
-      trapImage = ImageIO.read(new File("src/main/resources/pothole.png"));
+      trapImage = ImageIO.read(new File("resources/pothole.png"));
     } catch (Exception e) {
      System.err.println("Could not open file trap.png");
     }
@@ -158,7 +157,7 @@ public class GameGUI extends JComponent
   public int movePlayer(int incrx, int incry) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
       int newX = x + incrx;
       int newY = y + incry;
-      AudioPlayer bonk = new AudioPlayer("src/main/resources/invalid.wav");
+      AudioPlayer bonk = new AudioPlayer("resources/invalid.wav");
       
       // increment regardless of whether player really moves
       playerSteps++;
@@ -226,7 +225,7 @@ public class GameGUI extends JComponent
             {
                 if (r.getWidth() > 0)
                 {
-                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    AudioPlayer trap = new AudioPlayer("resources/trap.wav");
                     trap.play();
                     System.out.println("A TRAP IS IN THE WAY");
                     return -trapVal;
@@ -237,7 +236,7 @@ public class GameGUI extends JComponent
             {
                 if (r.getWidth() > 0)
                 {
-                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    AudioPlayer trap = new AudioPlayer("resources/trap.wav");
                     trap.play();
                     System.out.println("A TRAP IS IN THE WAY");
                     return -trapVal;
@@ -248,7 +247,7 @@ public class GameGUI extends JComponent
             {
                 if (r.getWidth() > 0)
                 {
-                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    AudioPlayer trap = new AudioPlayer("resources/trap.wav");
                     trap.play();
                     System.out.println("A TRAP IS IN THE WAY");
                     return -trapVal;
@@ -259,7 +258,7 @@ public class GameGUI extends JComponent
             {
                 if (r.getWidth() > 0)
                 {
-                    AudioPlayer trap = new AudioPlayer("src/main/resources/trap.wav");
+                    AudioPlayer trap = new AudioPlayer("resources/trap.wav");
                     trap.play();
                     System.out.println("A TRAP IS IN THE WAY");
                     return -trapVal;
@@ -336,7 +335,7 @@ public class GameGUI extends JComponent
         {
           r.setSize(0,0);
           System.out.println("TRAP IS SPRUNG!");
-            AudioPlayer fill = new AudioPlayer("src/main/resources/fill.wav");
+            AudioPlayer fill = new AudioPlayer("resources/fill.wav");
             fill.play();
           return trapVal;
         }
@@ -362,7 +361,7 @@ public class GameGUI extends JComponent
       // if location has a prize, pick it up
       if (p.getWidth() > 0 && p.contains(px, py))
       {
-        AudioPlayer coin = new AudioPlayer("src/main/resources/coin.wav");
+        AudioPlayer coin = new AudioPlayer("resources/coin.wav");
         coin.play();
 
         System.out.println("YOU PICKED UP A PRIZE!");
@@ -433,7 +432,7 @@ public class GameGUI extends JComponent
 
     int win = playerAtEnd();
 
-    AudioPlayer replay = new AudioPlayer("src/main/resources/restart.wav");
+    AudioPlayer replay = new AudioPlayer("resources/restart.wav");
     replay.play();
   
     // resize prizes and traps to "reactivate" them
@@ -595,11 +594,11 @@ public class GameGUI extends JComponent
     double px = playerLoc.getX();
     if (px > (WIDTH - 2*SPACE_SIZE))
     {
-        AudioPlayer goal = new AudioPlayer("src/main/resources/goal.wav");
+        AudioPlayer goal = new AudioPlayer("resources/goal.wav");
         goal.play();
 
         try {
-            AudioPlayer finalScore = new AudioPlayer("src/main/resources/finalScore.wav");
+            AudioPlayer finalScore = new AudioPlayer("resources/finalScore.wav");
             finalScore.play();
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
@@ -610,7 +609,7 @@ public class GameGUI extends JComponent
         }
 
 
-        AudioPlayer win = new AudioPlayer("src/main/resources/012 Course Clear.wav");
+        AudioPlayer win = new AudioPlayer("resources/012 Course Clear.wav");
         win.play();
 
       System.out.println("YOU MADE IT!");
@@ -618,7 +617,7 @@ public class GameGUI extends JComponent
     }
     else
     {
-        AudioPlayer lose = new AudioPlayer("src/main/resources/lose.wav");
+        AudioPlayer lose = new AudioPlayer("resources/lose.wav");
         lose.play();
       System.out.println("OOPS, YOU QUIT TOO SOON!");
       score = -endVal;

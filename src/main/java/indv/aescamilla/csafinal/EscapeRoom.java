@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static indv.aescamilla.csafinal.EscapeRoom.*;
@@ -64,7 +65,7 @@ public class EscapeRoom
   // individual player moves
   static int px = 0;
   static int py = 0;
-
+  ;
   static AudioPlayer background;
 
   public static void updateScore(int score) {
@@ -81,7 +82,9 @@ public class EscapeRoom
 
     game.createBoard();
 
-    background = new AudioPlayer("src/main/resources/013 Underground.wav");
+
+
+    background = new AudioPlayer("resources/013 Underground.wav");
     background.play();
     background.clip.loop(LOOP_CONTINUOUSLY);
     // size of move
@@ -120,6 +123,7 @@ public class EscapeRoom
 }
 
 class MKeyListener extends KeyAdapter {
+
 
   @Override
   public void keyPressed(KeyEvent event) {
@@ -286,6 +290,7 @@ class MKeyListener extends KeyAdapter {
           } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
               throw new RuntimeException(e);
           }
+          game.score = 0;
       }
       case KeyEvent.VK_SPACE -> {
           try {
