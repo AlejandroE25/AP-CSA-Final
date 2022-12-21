@@ -100,9 +100,6 @@ public class EscapeRoom
     String play = "true";
     while (play.equals("true")) // while the play string is true, the game will continue
     {
-      // get user input and call game methods to play
-    }
-    {
       /* TODO: get all the commands working */
 	  /* Your code here */
 
