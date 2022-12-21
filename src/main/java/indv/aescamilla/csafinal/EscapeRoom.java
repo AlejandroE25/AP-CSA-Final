@@ -68,7 +68,7 @@ public class EscapeRoom
   ;
   static AudioPlayer background;
 
-  public static void updateScore(int score) { // Thsi method updates the score by adding the score to the current score, and then updates the score label
+  public static void updateScore(int score) { // This method updates the score by adding the score to the current score, and then updates the score label
     game.score += score;
     game.scoreLabel.setText("Score: " + game.score);
   }
