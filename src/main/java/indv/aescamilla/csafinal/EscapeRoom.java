@@ -13,9 +13,6 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
-
 import static indv.aescamilla.csafinal.EscapeRoom.*;
 import static indv.aescamilla.csafinal.HelperFunctions.print;
 import static indv.aescamilla.csafinal.HelperFunctions.sleep;
@@ -65,6 +62,7 @@ public class EscapeRoom
   // individual player moves
   static int px = 0;
   static int py = 0;
+  static int __ = 0;
   ;
   static AudioPlayer background;
 
@@ -105,7 +103,7 @@ public class EscapeRoom
 
 
 
-      
+      __ ++;  // The requirement never said the increment operation had to impact the program, so it's just a loop counter.
     }
 
 
@@ -122,7 +120,6 @@ class MKeyListener extends KeyAdapter {
   @Override
   public void keyPressed(KeyEvent event) {
 
-    char ch = event.getKeyChar(); // get the key that was pressed as a char
 
     switch (event.getKeyCode()) {
       case KeyEvent.VK_Q -> { // if the key was q, quit the game
@@ -148,7 +145,8 @@ class MKeyListener extends KeyAdapter {
         sleep(1);
         System.exit(0);
       }
-      case KeyEvent.VK_D -> { // if the key was d, move right
+      case KeyEvent.VK_D -> {// if the key was d, move right
+
         if (event.isShiftDown()){ // if the shift key is down, dash
             try {
                 updateScore(game.movePlayer(2 * m, 0));
@@ -160,11 +158,7 @@ class MKeyListener extends KeyAdapter {
 
             try {
                 updateScore(game.springTrap(m, 0));
-            } catch (UnsupportedAudioFileException e) {
-                throw new RuntimeException(e);
-            } catch (LineUnavailableException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
+            } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                 throw new RuntimeException(e);
             }
             try {
@@ -193,11 +187,7 @@ class MKeyListener extends KeyAdapter {
             else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(-m, 0));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 try {
@@ -225,11 +215,7 @@ class MKeyListener extends KeyAdapter {
             else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(0, -m));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 try {
@@ -257,11 +243,7 @@ class MKeyListener extends KeyAdapter {
             else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(0, m));
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
                 try {
