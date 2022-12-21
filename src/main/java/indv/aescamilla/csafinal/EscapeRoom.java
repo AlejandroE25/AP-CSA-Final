@@ -68,7 +68,7 @@ public class EscapeRoom
   ;
   static AudioPlayer background;
 
-  public static void updateScore(int score) {
+  public static void updateScore(int score) { // Thsi method updates the score by adding the score to the current score, and then updates the score label
     game.score += score;
     game.scoreLabel.setText("Score: " + game.score);
   }
@@ -94,13 +94,6 @@ public class EscapeRoom
     
     int score = 0;
 
-    Scanner in = new Scanner(System.in);
-    String[] validCommands = { "right", "left", "up", "down", "r", "l", "u", "d",
-    "jump", "jr", "jumpleft", "jl", "jumpup", "ju", "jumpdown", "jd",
-    "pickup", "p", "quit", "q", "replay", "help", "?"};
-  
-
-
     // set up game
     boolean play = true;
     while (play)
@@ -113,7 +106,6 @@ public class EscapeRoom
       
     }
 
-  
 
     score += game.endGame();
 
@@ -128,10 +120,10 @@ class MKeyListener extends KeyAdapter {
   @Override
   public void keyPressed(KeyEvent event) {
 
-    char ch = event.getKeyChar();
+    char ch = event.getKeyChar(); // get the key that was pressed as a char
 
     switch (event.getKeyCode()) {
-      case KeyEvent.VK_Q -> {
+      case KeyEvent.VK_Q -> { // if the key was q, quit the game
           int gameEnd = 0;
 
           background.clip.stop();
@@ -154,15 +146,15 @@ class MKeyListener extends KeyAdapter {
         sleep(1);
         System.exit(0);
       }
-      case KeyEvent.VK_D -> {
-        if (event.isShiftDown()){
+      case KeyEvent.VK_D -> { // if the key was d, move right
+        if (event.isShiftDown()){ // if the shift key is down, dash
             try {
                 updateScore(game.movePlayer(2 * m, 0));
             } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        else if (event.isAltDown()) {
+        else if (event.isAltDown()) { // if the alt key is down, spring a trap
 
             try {
                 updateScore(game.springTrap(m, 0));
@@ -180,7 +172,7 @@ class MKeyListener extends KeyAdapter {
             }
 
         }
-        else {
+        else { // otherwise, just move
             try {
                 updateScore(game.movePlayer(m, 0));
             } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -188,15 +180,15 @@ class MKeyListener extends KeyAdapter {
             }
         }
       }
-      case KeyEvent.VK_A -> {
-            if (event.isShiftDown()){
+      case KeyEvent.VK_A -> { // if the key was a, move left
+            if (event.isShiftDown()){ // if the shift key is down, dash
                 try {
                     updateScore(game.movePlayer(-2 * m, 0));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-            else if (event.isAltDown()) {
+            else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(-m, 0));
                 } catch (UnsupportedAudioFileException e) {
@@ -212,7 +204,7 @@ class MKeyListener extends KeyAdapter {
                     throw new RuntimeException(e);
                 }
             }
-            else {
+            else { // otherwise, just move
                 try {
                     updateScore(game.movePlayer(-m, 0));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -220,15 +212,15 @@ class MKeyListener extends KeyAdapter {
                 }
             }
       }
-      case KeyEvent.VK_W -> {
-            if (event.isShiftDown()){
+      case KeyEvent.VK_W -> { // if the key was w, move up
+            if (event.isShiftDown()){ // if the shift key is down, dash
                 try {
                     updateScore(game.movePlayer(0, -2 * m));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-            else if (event.isAltDown()) {
+            else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(0, -m));
                 } catch (UnsupportedAudioFileException e) {
@@ -244,7 +236,7 @@ class MKeyListener extends KeyAdapter {
                     throw new RuntimeException(e);
                 }
             }
-            else {
+            else { // otherwise, just move
                 try {
                     updateScore(game.movePlayer(0, -m));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -252,15 +244,15 @@ class MKeyListener extends KeyAdapter {
                 }
             }
       }
-      case KeyEvent.VK_S -> {
-            if (event.isShiftDown()){
+      case KeyEvent.VK_S -> {   // if the key was s, move down
+            if (event.isShiftDown()){ // if the shift key is down, dash
                 try {
                     updateScore(game.movePlayer(0, 2 * m));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-            else if (event.isAltDown()) {
+            else if (event.isAltDown()) { // if the alt key is down, spring a trap
                 try {
                     updateScore(game.springTrap(0, m));
                 } catch (UnsupportedAudioFileException e) {
@@ -276,7 +268,7 @@ class MKeyListener extends KeyAdapter {
                     throw new RuntimeException(e);
                 }
             }
-            else {
+            else {  // otherwise, just move
                 try {
                     updateScore(game.movePlayer(0, m));
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -284,7 +276,7 @@ class MKeyListener extends KeyAdapter {
                 }
             }
       }
-      case KeyEvent.VK_R -> {
+      case KeyEvent.VK_R -> { // if the key was r, reset the game
           try {
               updateScore(game.replay());
           } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -292,7 +284,7 @@ class MKeyListener extends KeyAdapter {
           }
           game.score = 0;
       }
-      case KeyEvent.VK_SPACE -> {
+      case KeyEvent.VK_SPACE -> { // if the key was space, pickup the prize
           try {
               updateScore(game.pickupPrize());
           } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -300,16 +292,10 @@ class MKeyListener extends KeyAdapter {
           }
       }
 
-      case KeyEvent.VK_H -> {
+      case KeyEvent.VK_H -> { // if the key was h, display the help message
           JFrame frame = new JFrame("Help");
-          JOptionPane.showMessageDialog(frame, "Use the arrow keys to move. Hold shift to move twice as far. Press space to pick up a prize. Press R to replay the game. Press Q to quit.");
+          JOptionPane.showMessageDialog(frame, "Use the arrow keys to move. Hold shift to move twice as far.  Hold alt and move to spring a trap. Press space to pick up a prize. Press R to replay the game. Press Q to quit.");
       }
-    }
-
-    if (event.getKeyCode() == KeyEvent.VK_HOME) {
-
-      System.out.println("Key codes: " + event.getKeyCode());
-
     }
   }
 }
