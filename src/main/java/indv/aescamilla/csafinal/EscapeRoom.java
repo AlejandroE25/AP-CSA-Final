@@ -97,8 +97,11 @@ public class EscapeRoom
     int score = 0;
 
     // set up game
-    boolean play = true;
-    while (play)
+    String play = "true";
+    while (play.equals("true")) // while the play string is true, the game will continue
+    {
+      // get user input and call game methods to play
+    }
     {
       /* TODO: get all the commands working */
 	  /* Your code here */
