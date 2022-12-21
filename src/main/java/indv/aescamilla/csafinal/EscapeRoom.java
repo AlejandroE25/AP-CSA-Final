@@ -78,6 +78,8 @@ public class EscapeRoom
     print("Welcome to EscapeRoom!");
     print("Get to the other side of the room, avoiding walls and invisible traps,");
     print("pick up all the prizes.\n");
+
+    print("Press 'H' for a list of commands.");
     
 
     game.createBoard();
@@ -294,7 +296,7 @@ class MKeyListener extends KeyAdapter {
 
       case KeyEvent.VK_H -> { // if the key was h, display the help message
           JFrame frame = new JFrame("Help");
-          JOptionPane.showMessageDialog(frame, "Use the arrow keys to move. Hold shift to move twice as far.  Hold alt and move to spring a trap. Press space to pick up a prize. Press R to replay the game. Press Q to quit.");
+          JOptionPane.showMessageDialog(frame, "Use the WASD keys to move. Hold shift to move twice as far.  Hold alt and move to spring a trap. Press space to pick up a prize. Press R to replay the game. Press Q to quit.");
       }
     }
   }
